@@ -143,6 +143,34 @@ void data_display(vector<string> name, vector<int> reg_no, vector<string> facult
 
     }    
 }
+void initialisation(vector<string> &name, vector<int> &reg_no, vector<string> &faculty, vector<string> &contact_no){
+  ifstream name_file ("name.txt");
+  string line;
+  while(getline(name_file, line)){
+    name.push_back(line);
+  }
+  name_file.close();
+
+  ifstream reg_file("reg_no.txt");
+  int no;
+  while(reg_file >> no){
+    reg_no.push_back(no);
+  }
+  reg_file.close();
+
+  ifstream contact_file("contact_no.txt");
+  while(contact_file >> line){
+    contact_no.push_back(line);
+  }
+contact_file.close();
+
+  ifstream faculty_file("faculty.txt");
+  while(faculty_file >> line){
+    faculty.push_back(line);
+  }
+  faculty_file.close();
+}
+
 
 int main(){
     char save;
