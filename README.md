@@ -123,4 +123,26 @@ void update_data(vector<string> &name, vector<int> &reg_no, vector<string> &facu
     }
 
 }
+void data_display(vector<string> name, vector<int> reg_no, vector<string> faculty, vector<string> contact_no){
+    
+    cout<<endl;
+    for(int i = 0; i < 26; i++){
+            cout<<char(178);
+        }
+        cout<<endl;    
+        
+    for(int i = 0; i < name.size(); i++){
+        cout<<"Student Name "<<i+1<<" : "<<name[i]<<endl;
+        cout<<"Registration # "<<" "<<reg_no[i]<<endl;
+        cout<<"Faculty : "<<faculty[i]<<endl;
+        cout<<"Contact no : "<<contact_no[i]<<endl;
+        for(int i = 0; i < 26; i++){
+            cout<<char(178);
+        }
+        cout<<endl;
+
+    }    
+}
+
+
 
