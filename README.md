@@ -124,4 +124,3 @@ void update_data(vector<string> &name, vector<int> &reg_no, vector<string> &facu
 
 }
 
-
