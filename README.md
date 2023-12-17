@@ -171,6 +171,33 @@ contact_file.close();
   faculty_file.close();
 }
 
+void record_updation(vector<string> &name, vector<int> &reg_no, vector<string> &faculty, vector<string> &contact_no){
+  
+  ofstream name_file("name.txt");
+  for(int i = 0; i < name.size(); i++){
+    name_file<<name[i]<<endl;
+  }
+  name_file.close();
+
+  ofstream reg_file("reg_no.txt");
+  for(int i = 0; i < reg_no.size(); i++){
+    reg_file<<reg_no[i]<<endl;
+  }
+  reg_file.close();
+
+  ofstream faculty_file("faculty.txt");
+  for(int i = 0; i < faculty.size(); i++){
+    faculty_file<<faculty[i]<<endl;
+  }
+  faculty_file.close();
+
+  ofstream contact_file("contact_no.txt");
+  for(int i = 0; i < contact_no.size(); i++){
+    contact_file<<contact_no[i]<<endl;
+  }
+  contact_file.close();
+}
+
 
 int main(){
     char save;
