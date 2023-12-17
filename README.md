@@ -144,5 +144,68 @@ void data_display(vector<string> name, vector<int> reg_no, vector<string> facult
     }    
 }
 
+int main(){
+    char save;
+    int choice;
+    int size;
+    vector<string> name;
+    vector<int> reg_no;
+    vector<string> faculty;
+    vector<string> contact_no;
+
+    initialisation(name, reg_no, faculty, contact_no);
+
+do{
+    cout<<endl;
+    cout<<"*****************STUDENT MANAGEMENT SYSTEM***************\n\n";
+    cout<<"1. Data Entry \n";
+    cout<<"2. Data display \n";
+    cout<<"3. Search and Update \n";
+    cout<<"4. Delete student record \n";
+    cout<<"5. Exit and Save Changes \n\n";
+
+    cout<<"Enter function : \n";
+    cin>>choice;
+    
+    switch(choice){
+        case 1:
+           enter_data(name, reg_no, faculty, contact_no);
+        break;
+
+        case 2 :
+           data_display(name, reg_no, faculty, contact_no);
+           break;
+
+        case 3:
+           update_data(name, reg_no, faculty, contact_no);
+           break;
+
+        case 4:
+           del(name, reg_no, faculty, contact_no);
+           break;
+
+        case 5:
+           break;
+              
+        default:
+           cout<<"Invalid Function!\n";  
+    }
+
+}while(choice != 5);
+cout<<endl;
+
+cout<<"Do you want to save the changes (y/n) : \n";
+cin>>save;
+save = toupper(save);
+cout<<endl;
+
+if(save == 'Y'){
+    record_updation(name, reg_no, faculty, contact_no);
+    cout<<"Changes saved succesfully!\n";
+}
+cout<<endl;
+cout<<"************SAYONARA**************\n";  
+}
+
 
 
