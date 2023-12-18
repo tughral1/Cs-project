@@ -197,7 +197,35 @@ void record_updation(vector<string> &name, vector<int> &reg_no, vector<string> &
   }
   contact_file.close();
 }
+void enter_data(vector<string> &name, vector<int> &reg_no, vector<string> &faculty, vector<string> &contact_no){
+    string t_name;
+    int t_reg;
+    string t_faculty;
+    string t_contact_no;
+    int size;
+    
 
+    cout<<"How many students do you want to enter : \n";
+    cin>>size;
+
+    cout<<endl;
+
+    for (int i = 0; i < size; i++){
+        cout<<"Enter name of student#"<<i+1<<" : "<<endl;
+        getline(cin>> ws,  t_name);
+        name.push_back(t_name);
+        cout<<"Enter Registration no of student"<<i+1<<" : "<<endl;
+        cin>>t_reg;
+        reg_no.push_back(t_reg);
+        cout<<"Enter faculty of student"<<i+1<<" : "<<endl;
+        cin>>t_faculty;
+        faculty.push_back(t_faculty);
+        cout<<"Enter contact no of student"<<i+1<<" : "<<endl;
+        cin>>t_contact_no;
+        contact_no.push_back(t_contact_no);
+        cout<<endl;
+    }
+}
 
 int main(){
     char save;
