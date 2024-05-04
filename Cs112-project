@@ -1,1 +1,50 @@
-Iam me
+#include <iostream>
+#include <vector>
+#include <conio.h>
+#include <windows.h>
+#include <cstdlib>
+#include <utility>
+#include <iomanip>
+using namespace std;
+
+#define reset "\033[0m"
+#define bold "\033[1m"
+#define underline "\033[4m"
+#define red "\033[31m"
+#define green "\033[32m"
+#define yellow "\033[33m"
+#define inverse "\033[7m"
+#define italic "\033[3m"
+
+enum interests{football, excercise, travelling, going_to_the_theater, 
+dancing, cooking, politics, pets,
+photography, sports, art, learning, music, technology,
+video_games, reading, writing, food, nightlife, cat_lover, borad_games, hiking,
+spirituality, netflix, fashion, movies, baking, running, swimming};
+
+class friends_request{
+    string name;
+    public:
+    friends_request(string name){
+        this->name = name;
+    }
+    bool accept(){
+        bool friends;
+        char choice;
+        cout<<"\nDo you accept or decline (y/n) : ";
+        cin>>choice;
+        Beep(600, 200);
+        choice = toupper(choice);
+        choice == 'Y'? friends= true: friends = false;
+        return friends;
+    }
+
+    string get_name(){
+        return name;
+    }
+
+    void display(){
+        cout<<"\n-----------------------------------\n";
+        cout<<"\033[1;33mName : \033[0m"<<name<<endl;
+    }
+};
