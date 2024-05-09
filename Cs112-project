@@ -48,3 +48,187 @@ class friends_request{
         cout<<"\033[1;33mName : \033[0m"<<name<<endl;
     }
 };
+
+class User{
+    string name, password;
+    string status;
+    string about;
+    vector<interests> interest;
+    vector<pair<string, string>> messages;
+    
+    public:
+    vector <string> friends;
+    vector<friends_request> fr;
+
+    User(string n, string p){
+        name = n;
+        password = p;
+    }
+
+    void send_message(vector<User>& user, string sender_name){
+        system("cls");
+        string message, name, t_message;
+        bool found = false;
+        cout<<"Send Message\n__\n\n";
+        cout<<"Enter recipent's name : ";
+        getline(cin>>ws, name);
+        Beep(700, 200);
+        for(int i = 0; i < user.size(); i++){
+            if(user[i].get_name() == name){
+                found = true;
+                cout<<"Enter message : ";
+                getline(cin>>ws, t_message);
+                time_t now = time(nullptr);
+                char timestamp[50];
+                strftime(timestamp, sizeof(timestamp), "%d/%m/%Y/ %I:%M%p", localtime(&now));
+                message = (timestamp);
+                message += " " + t_message;
+                Beep(700, 200);
+                user[i].messages.push_back(make_pair(sender_name, message));
+                cout<<"\nMessage Sent!\n";
+                Sleep(1000);
+                break;
+            }
+        }
+        if(!found){
+            cout<<"This username doesn't exist...\n";
+            Sleep(1000);
+        }
+    }
+
+    void message_display(){
+        if(messages.empty()){
+            cout<<yellow<<bold<<"No new messages have been sent..."<<reset<<endl;
+            Sleep(700);
+        }
+        else{
+            cout <<bold<<underline<<"New Messages\n\n"<<reset;
+            for (auto &m : messages) {
+                cout <<m.second.substr(0, 19)<<endl;
+                cout << bold<<m.first<<" says : "<<reset<<m.second.substr(19)<<endl<<endl;                                     
+            
+            }
+            messages.clear(); // Clear the received messages after displaying
+        }
+            system("PAUSE");
+    }
+    string get_name(){
+        return name;
+    }
+    string get_password(){
+        return password;
+    }
+
+    void display(){
+        cout<<"\n------------------------------------\n";
+        cout<<"Name : "<<name<<endl;
+    }
+};
+
+bool username_check(string t_name, vector<User> &user){
+    bool unique_username = true;
+    for(int i = 0; i < user.size(); i++){
+        if(t_name == user[i].get_name()){
+            unique_username = false;
+            break;
+        }
+    }
+    return unique_username;
+}
+
+bool login(vector<User>& u, int& index){
+    system("cls");
+    bool exists = false;
+    string t_name;
+    int i = 0;
+    char password[50];
+    cout<<"\n________________\033[1;31mLOGIN PORTAL\033[0m________________\n";
+    cout<<"Enter Name : ";
+    getline(cin>>ws, t_name);
+    Beep(600, 200);
+    cout<<"Enter Password : ";
+    while(true){
+        char ch = _getch();
+        if(ch == '\r'){
+            password[i] = '\0';
+            break;
+        }
+        else if(ch == '\b' and i>0){
+            cout<<"\b \b";
+            i--;
+        }
+        else if(isprint(ch)){
+            password[i++] = ch;
+            cout<<'*';
+        }
+    }
+    Beep(600, 200);
+    cout<<endl;
+    for(int i = 0; i< u.size(); i++){
+        if(u[i].get_name() == t_name and u[i].get_password()== password){
+            exists = true;
+            index = i;
+            break;
+        }
+    }
+    if(!exists){
+        cout<<"\n\033[1;33mIncorrect User Name or Password!\033[0m\n";
+        Sleep(1000);
+        system("PAUSE");
+        
+    }
+    return exists;
+}
+
+void find_user_index(vector<User>&u , const int& index, int j, int&index_2){
+    for(int i = 0; i < u.size(); i++){
+        if(u[i].get_name() == u[index].fr[j].get_name()){
+            index_2 = i;
+        }
+    }
+}
+
+void sign_up(vector<User>& u){
+    start:
+    system("cls");
+    string name;
+    char password[50];
+
+    int i = 0;
+    cout<<"\n\033[1;31m________________Sign Up Portal________________\033[0m";
+    cout<<"\n______________________________________________\n";
+    cout<<"Enter Username : ";
+    getline(cin>>ws, name);
+    Beep(600, 200);
+    if(!username_check(name, u)){
+        cout<<"\033[1;31mUsername already exists!\033[0m\n";
+        Sleep(2000);
+        goto start;
+    }
+    cout<<"Enter Password : ";
+    while(true){
+        char ch = _getch();
+        if(ch == '\r'){
+            password[i] = '\0';
+            break;
+        }
+        else if(ch == '\b' and i>0){
+            cout<<"\b \b";
+            i--;
+        }
+
+        else if(isprint(ch)){
+            password[i++] = ch;
+            cout<<'*';
+        }
+    }
+    Beep(600, 200);
+    cout<<endl;
+    cout<<"\n\033[1;33mAccount Created Successfully!\033[0m\n\n";
+    u.emplace_back(name, password);
+    Sleep(1000);
+    system("PAUSE");
+    Beep(600, 200);
+}
+
+
