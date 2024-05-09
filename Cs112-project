@@ -230,5 +230,135 @@ void sign_up(vector<User>& u){
     system("PAUSE");
     Beep(600, 200);
 }
+void friend_request(vector<User>& user, const string& sender_name, int& index){
+    system("cls");
 
+    string t_name;
+    bool exists = false;
+    bool request_exists = false;
+    cout<<green<<underline<<bold<<"Search Name"<<reset<<" : ";
+    getline(cin>>ws, t_name);
+    Beep(600, 200);
+    char choice;
+
+    if(t_name == sender_name){
+        cout<<red<<"\nCan't Send A Friend Request To Yourself!\n"<<reset<<endl;
+        Sleep(2000);
+    }
+    else{
+
+      for(int i = 0; i<user.size(); i++){
+        if(t_name == user[i].get_name()){
+            exists = true;
+            for(int j = 0; j < user[i].fr.size(); j++){
+                if(user[i].fr[j].get_name() == sender_name){
+                    cout<<yellow<<bold<<"Request Has Already Been Sent!\n"<<reset<<endl;
+                    Sleep(1500);
+                    request_exists = true;
+                    break;
+                }
+            }
+            if(request_exists){
+                break;
+            }
+            user[i].display();
+                cout<<"\n\033[1;32mSend Friend Request (y/n) : \033[0m";
+                cin>>choice;
+                Beep(700, 200);
+                choice = toupper(choice);
+                if(choice== 'Y'){
+                   user[i].fr.emplace_back(sender_name);
+                   cout<<"\n\033[1;33mRequest Sent!\033[0m\n";
+                   Sleep(2000);
+                }
+                break;  
+        }
+      }
+      if(!exists){
+        cout<<"\033[1;31mUsername Not Found...\033[0m";
+        Sleep(2000);
+        system("cls");
+      }
+    }    
+}
+
+void view_friend_requests(vector<User> &user, const int& index){
+    int index_2;
+    if(!user[index].fr.empty()){
+        for (int i = user[index].fr.size() - 1; i >= 0; i--){
+            user[index].fr[i].display();
+            if(user[index].fr[i].accept()){
+                find_user_index(user, index, i, index_2);
+                user[index].friends.push_back(user[index].fr[i].get_name());
+                user[index_2].friends.push_back(user[index].get_name());
+                user[index].fr.erase(user[index].fr.begin()+i);
+                cout<<"\033[1;32mRequest Accepted!\033[0m\n";
+            }
+            else {
+                cout<<red<<bold"Request Declined!\n"<<reset<<endl;
+                user[index].fr.erase(user[index].fr.begin()+i);
+                Sleep(2000);
+            }
+
+        }
+        system("PAUSE");
+    }
+    else{
+        cout<<"\033[1;33mYou have no friend requests!\n\033[0m";
+        Sleep(1000);
+    }
+}
+
+void view_friends(vector<User> &user, const int&index){
+    system("cls");
+    bool unfriend = false;
+    char unfriend_choice;
+    int f_index;
+    string t_name;
+    if(user[index].friends.empty()){
+        cout<<yellow<<bold<<"No Friends Yet...\n"<<reset<<endl;
+    }
+    else{
+        cout<<"\n\033[1;33mFriends :\033[0m\n";
+        for(int i = 0; i < user[index].friends.size(); i++){
+            cout<<i+1<<". "<<user[index].friends[i]<<endl;
+        }
+        cout<<endl;
+        cout<<bold<<"Do You Wish To Unfriend Someone ? (Y/N) : "<<reset;
+        cin>>unfriend_choice;
+        Beep(700, 200);
+        unfriend_choice = toupper(unfriend_choice);
+        if(unfriend_choice == 'Y'){
+            cout<<"Enter Name Of Friend : ";
+            getline(cin>>ws, t_name);
+            Beep(700, 200);
+            for(int i = 0; i < user[index].friends.size(); i++){
+                if(user[index].friends[i] == t_name){
+                    user[index].friends.erase(user[index].friends.begin()+i);
+                    cout<<red<<bold<<t_name<<" was unfriended!"<<reset<<endl;
+                    unfriend = true;
+                    break;
+                }
+            }    
+            for(int j = 0; j < user.size(); j++){
+                if(user[j].get_name() == t_name){
+                    f_index = j;
+                    break;
+                }
+            }
+            for(int k = 0; k <user[f_index].friends.size(); k++){
+                if(user[f_index].friends[k] == user[index].get_name()){
+                    user[f_index].friends.erase(user[f_index].friends.begin()+k);
+                }
+            }
+
+                
+        }
+        if(!unfriend){
+            cout<<bold<<"\nName Not Found...\n"<<reset<<endl;
+        }
+    }
+    system("PAUSE");
+    Beep(700, 200);
+}
 
