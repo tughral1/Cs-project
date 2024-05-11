@@ -362,3 +362,93 @@ void view_friends(vector<User> &user, const int&index){
     Beep(700, 200);
 }
 
+int main(){
+    vector<User> v;
+    int option;
+    int u_option;
+    int index;
+
+    do{
+        start:
+        system("cls");
+    for(int i = 0; i<26; i++){
+        cout<<char(178);
+    }
+    cout<<" Social Networking Site ";
+    for(int i = 0; i<26; i++){
+        cout<<char(178);
+    }
+    cout<<endl;
+    cout<<"\n\t\t\t\t1. Sign Up\n\t\t\t\t2. Login\n\t\t\t\t5. Exit\n";
+    cout<<"\nOption# : ";
+    cin>>option;
+    Beep(600, 200);
+
+    switch(option){
+        case 1:
+        sign_up(v);
+        break;
+
+        case 2:
+        if(login(v, index)){ 
+            do{
+            system("cls"); 
+              cout <<bold<<italic<<red<< "Welcome, " << v[index].get_name() << "!" <<reset<< endl;  
+              cout << "-------------------------" << endl;
+              cout << "1. View Profile" << endl;
+              cout << "2. View Friends" << endl;
+              cout << "3. Send Friend Request" << endl;
+              cout << "4. Send Message" << endl;
+              cout << "5. View Message"<<endl;
+              cout << "6. View Friend Requests" << endl;
+              cout << "7. Logout" << endl;
+              cout << "-------------------------" << endl;
+              cout << "Option: ";
+              cin>>u_option;
+              Beep(600, 200);
+
+              switch(u_option){
+
+                case 2:
+                 view_friends(v, index);
+                 break;
+                case 3:
+                 friend_request(v, v[index].get_name(), index);
+                 break;
+                case 4:
+                 v[index].send_message(v, v[index].get_name());
+                 break;
+                case 5:
+                 v[index].message_display();
+                 break;
+                case 6:
+                 view_friend_requests(v, index);
+                 break;
+                case 7:
+                 cout<<"\033[1;33mLogged Out Successfully!\n\033[0m";
+                 Sleep(1000);
+                 goto start;
+               }
+
+            }while(u_option != 7);    
+        }
+        else{
+            goto start;
+        }
+        
+
+        break;
+
+        case 5:
+        cout<<"See You Later.....\n";
+        break;
+
+        default:
+        cout<<red<<bold<<"Type in a Valid Option...\n"<<reset;
+        Sleep(1000);
+        break;
+    }
+
+    }while(option!= 5);
+    return 0;
+}
